@@ -11,7 +11,9 @@
 
 
 # ChatGPT:
-Sure! Here's a README for using the generated scripts:
+Sure, here is an updated and detailed README that includes the additional details for the scripts you have provided.
+
+---
 
 # Artistic Audio Visualizer
 

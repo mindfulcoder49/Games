@@ -15,10 +15,11 @@ LOWER_FREQ = 50
 UPPER_FREQ = 8000
 THRESHOLD = 0.18
 MAX_CIRCLE_SIZE = 80  # Adjust to make the biggest circles bigger
+MAX_BAR_HEIGHT = 400  # Adjust to make the tallest bars taller
 
 # Configurable fields
-config_fields = ["SMOOTHING_FACTOR", "LOWER_FREQ", "UPPER_FREQ", "THRESHOLD", "MAX_CIRCLE_SIZE"]
-config_values = [SMOOTHING_FACTOR, LOWER_FREQ, UPPER_FREQ, THRESHOLD, MAX_CIRCLE_SIZE]
+config_fields = ["SMOOTHING_FACTOR", "LOWER_FREQ", "UPPER_FREQ", "THRESHOLD", "MAX_CIRCLE_SIZE", "MAX_BAR_HEIGHT"]
+config_values = [SMOOTHING_FACTOR, LOWER_FREQ, UPPER_FREQ, THRESHOLD, MAX_CIRCLE_SIZE, MAX_BAR_HEIGHT]
 current_field = 0
 input_value = ""
 
@@ -145,7 +146,7 @@ while True:
                 input_value = input_value[:-1]
 
     # Update configurable values
-    SMOOTHING_FACTOR, LOWER_FREQ, UPPER_FREQ, THRESHOLD, MAX_CIRCLE_SIZE = config_values
+    SMOOTHING_FACTOR, LOWER_FREQ, UPPER_FREQ, THRESHOLD, MAX_CIRCLE_SIZE, MAX_BAR_HEIGHT = config_values
 
     screen.fill(BLACK)
 
@@ -176,6 +177,11 @@ while True:
                     circle_y = HEIGHT - int(magnitude * HEIGHT)  # Start from the bottom
                     circle_radius = int(magnitude * MAX_CIRCLE_SIZE)
                     pygame.draw.circle(screen, color, (circle_x, circle_y), circle_radius)
+
+                    # Map frequency to x coordinate using logarithmic scale
+                    bar_x = frequency_to_x_log(frequency, LOWER_FREQ, UPPER_FREQ, WIDTH)
+                    bar_height = int(magnitude * MAX_BAR_HEIGHT)
+                    pygame.draw.rect(screen, color, (bar_x, HEIGHT - bar_height, 10, bar_height))
 
     # Display configurable fields
     display_config_fields(screen, config_fields, config_values, current_field, input_value, WIDTH, HEIGHT)
